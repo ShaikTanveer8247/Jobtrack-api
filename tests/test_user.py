@@ -1,6 +1,6 @@
 def test_register_user(auth_client):
     response = auth_client.post(
-        "/users/register",
+        "/api/v1/users/register",
         json={
             "email": "newuser@example.com",
             "password": "securepassword123",
@@ -24,14 +24,14 @@ def test_duplicate_user_registration(auth_client):
     }
 
     first_response = auth_client.post(
-        "/users/register",
+        "/api/v1/users/register",
         json=user,
     )
 
     assert first_response.status_code == 201
 
     second_response = auth_client.post(
-        "/users/register",
+        "/api/v1/users/register",
         json=user,
     )
 
@@ -44,7 +44,7 @@ def test_duplicate_user_registration(auth_client):
 
 def test_login_user(auth_client):
     auth_client.post(
-        "/users/register",
+        "/api/v1/users/register",
         json={
             "email": "login@example.com",
             "password": "securepassword123",
@@ -52,7 +52,7 @@ def test_login_user(auth_client):
     )
 
     response = auth_client.post(
-        "/users/login",
+        "/api/v1/users/login",
         data={
             "username": "login@example.com",
             "password": "securepassword123",
@@ -69,7 +69,7 @@ def test_login_user(auth_client):
 
 def test_invalid_login(auth_client):
     response = auth_client.post(
-        "/users/login",
+        "/api/v1/users/login",
         data={
             "username": "missing@example.com",
             "password": "wrongpassword",
@@ -81,14 +81,14 @@ def test_invalid_login(auth_client):
 
 
 def test_protected_route_requires_authentication(auth_client):
-    response = auth_client.get("/applications")
+    response = auth_client.get("/api/v1/applications")
 
     assert response.status_code == 401
 
 
 def test_authenticated_user_can_access_protected_route(auth_client):
     auth_client.post(
-        "/users/register",
+        "/api/v1/users/register",
         json={
             "email": "protected@example.com",
             "password": "securepassword123",
@@ -96,7 +96,7 @@ def test_authenticated_user_can_access_protected_route(auth_client):
     )
 
     login_response = auth_client.post(
-        "/users/login",
+        "/api/v1/users/login",
         data={
             "username": "protected@example.com",
             "password": "securepassword123",
@@ -106,7 +106,7 @@ def test_authenticated_user_can_access_protected_route(auth_client):
     token = login_response.json()["access_token"]
 
     response = auth_client.get(
-        "/applications",
+        "/api/v1/applications",
         headers={
             "Authorization": f"Bearer {token}",
         },

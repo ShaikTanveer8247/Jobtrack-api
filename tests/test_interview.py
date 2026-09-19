@@ -20,7 +20,7 @@ def test_get_upcoming_interviews(client, db_session):
     future_date = datetime.now() + timedelta(days=7)
 
     create_response = client.post(
-        "/interviews/",
+        "/api/v1/interviews/",
         json={
             "application_id": application.id,
             "round": "Technical",
@@ -32,7 +32,7 @@ def test_get_upcoming_interviews(client, db_session):
 
     assert create_response.status_code == 201
 
-    response = client.get("/interviews/upcoming")
+    response = client.get("/api/v1/interviews/upcoming")
 
     assert response.status_code == 200
 
@@ -56,7 +56,7 @@ def test_create_interview(client, db_session):
     db_session.refresh(application)
 
     response = client.post(
-        "/interviews/",
+        "/api/v1/interviews/",
         json={
             "application_id": application.id,
             "round": "Technical",
@@ -88,7 +88,7 @@ def test_get_interviews(client, db_session):
     db_session.refresh(application)
 
     create_response = client.post(
-        "/interviews/",
+        "/api/v1/interviews/",
         json={
             "application_id": application.id,
             "round": "HR",
@@ -100,7 +100,7 @@ def test_get_interviews(client, db_session):
 
     assert create_response.status_code == 201
 
-    response = client.get("/interviews")
+    response = client.get("/api/v1/interviews")
 
     assert response.status_code == 200
 
@@ -146,7 +146,7 @@ def test_user_cannot_access_another_users_interview(
     db_session.refresh(other_interview)
 
     response = client.get(
-        f"/interviews/{other_interview.id}"
+        f"/api/v1/interviews/{other_interview.id}"
     )
 
     assert response.status_code == 404
@@ -189,7 +189,7 @@ def test_user_cannot_update_another_users_interview(
     db_session.refresh(other_interview)
 
     response = client.put(
-        f"/interviews/{other_interview.id}",
+        f"/api/v1/interviews/{other_interview.id}",
         json={
             "round": "HR",
         },

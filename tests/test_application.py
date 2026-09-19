@@ -26,7 +26,7 @@ def test_user_cannot_access_another_users_application(
     db_session.refresh(other_application)
 
     response = client.get(
-        f"/applications/{other_application.id}"
+        f"/api/v1/applications/{other_application.id}"
     )
 
     assert response.status_code == 404
@@ -34,7 +34,7 @@ def test_user_cannot_access_another_users_application(
     
 def test_create_application(client):
     response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json={
             "company": "Test Company",
             "role": "Backend Intern",
@@ -52,7 +52,7 @@ def test_create_application(client):
 
 def test_get_applications(client):
     response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json={
             "company": "Google",
             "role": "Python Backend Intern",
@@ -62,7 +62,7 @@ def test_get_applications(client):
 
     assert response.status_code == 201
 
-    response = client.get("/applications")
+    response = client.get("/api/v1/applications")
 
     assert response.status_code == 200
 
@@ -81,14 +81,14 @@ def test_duplicate_application(client):
     }
 
     first_response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json=application,
     )
 
     assert first_response.status_code == 201
 
     second_response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json=application,
     )
 
@@ -100,7 +100,7 @@ def test_duplicate_application(client):
 
 def test_application_status_history(client):
     create_response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json={
             "company": "Google",
             "role": "Python Backend Intern",
@@ -113,7 +113,7 @@ def test_application_status_history(client):
     application_id = create_response.json()["id"]
 
     update_response = client.put(
-        f"/applications/{application_id}",
+        f"/api/v1/applications/{application_id}",
         json={
             "status": "Interview",
         },
@@ -123,7 +123,7 @@ def test_application_status_history(client):
     assert update_response.json()["status"] == "Interview"
 
     history_response = client.get(
-        f"/applications/{application_id}/history"
+        f"/api/v1/applications/{application_id}/history"
     )
 
     assert history_response.status_code == 200
@@ -163,7 +163,7 @@ def test_user_cannot_update_another_users_application(
     db_session.refresh(other_application)
 
     response = client.put(
-        f"/applications/{other_application.id}",
+        f"/api/v1/applications/{other_application.id}",
         json={
             "status": "Interview",
         },
@@ -173,7 +173,7 @@ def test_user_cannot_update_another_users_application(
 
 def test_delete_application(client):
     create_response = client.post(
-        "/applications/",
+        "/api/v1/applications/",
         json={
             "company": "Delete Test",
             "role": "Backend Intern",
@@ -184,7 +184,7 @@ def test_delete_application(client):
     application_id = create_response.json()["id"]
 
     response = client.delete(
-        f"/applications/{application_id}"
+        f"/api/v1/applications/{application_id}"
     )
 
     assert response.status_code == 200
@@ -206,7 +206,7 @@ def test_delete_interview(client, db_session):
     db_session.refresh(application)
 
     create_response = client.post(
-        "/interviews/",
+        "/api/v1/interviews/",
         json={
             "application_id": application.id,
             "round": "Technical",
@@ -219,7 +219,7 @@ def test_delete_interview(client, db_session):
     interview_id = create_response.json()["id"]
 
     response = client.delete(
-        f"/interviews/{interview_id}"
+        f"/api/v1/interviews/{interview_id}"
     )
 
     assert response.status_code == 200
