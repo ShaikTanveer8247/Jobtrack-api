@@ -9,7 +9,7 @@ from ..models import User
 from .jwt import SECRET_KEY, ALGORITHM
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/users/login")
 
 
 def get_db():

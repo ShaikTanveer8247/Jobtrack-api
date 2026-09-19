@@ -14,7 +14,6 @@ router = APIRouter(
     tags=["Users"],
 )
 
-
 @router.post(
     "/register",
     response_model=UserResponse,

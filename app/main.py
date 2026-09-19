@@ -43,8 +43,21 @@ def health_check():
     return {"status": "ok"}
 
 
-app.include_router(applications_router)
-app.include_router(users_router)
-app.include_router(interviews_router)
+API_V1_PREFIX = "/api/v1"
+
+app.include_router(
+    applications_router,
+    prefix=API_V1_PREFIX,
+)
+
+app.include_router(
+    users_router,
+    prefix=API_V1_PREFIX,
+)
+
+app.include_router(
+    interviews_router,
+    prefix=API_V1_PREFIX,
+)
 # python -m uvicorn app.main:app --reload
 # .\venv\Scripts\Activate.ps1

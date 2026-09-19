@@ -20,7 +20,7 @@ from ..schemas.common import DeleteResponse
 
 router = APIRouter(
     prefix="/applications",
-    tags=["Applications"]
+    tags=["Applications"],
 )
 
 
