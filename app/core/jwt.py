@@ -7,15 +7,19 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parents[2]
+ENV_FILE = BASE_DIR / ".env"
 
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(ENV_FILE)
 
+TESTING = os.getenv("TESTING") == "1"
 
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 if not SECRET_KEY:
-    raise RuntimeError("JWT_SECRET_KEY is missing from .env")
-
+    if TESTING:
+        SECRET_KEY = "test-secret-key"
+    else:
+        raise RuntimeError("JWT_SECRET_KEY is missing from .env")
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
