@@ -170,3 +170,60 @@ def test_user_cannot_update_another_users_application(
     )
 
     assert response.status_code == 404
+
+def test_delete_application(client):
+    create_response = client.post(
+        "/applications/",
+        json={
+            "company": "Delete Test",
+            "role": "Backend Intern",
+            "status": "Applied",
+        },
+    )
+
+    application_id = create_response.json()["id"]
+
+    response = client.delete(
+        f"/applications/{application_id}"
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "message": "Application deleted successfully",
+        "id": application_id,
+    }
+
+def test_delete_interview(client, db_session):
+    application = Application(
+        user_id=1,
+        company="Delete Interview Test",
+        role="Backend Intern",
+        status="Interview",
+    )
+
+    db_session.add(application)
+    db_session.commit()
+    db_session.refresh(application)
+
+    create_response = client.post(
+        "/interviews/",
+        json={
+            "application_id": application.id,
+            "round": "Technical",
+            "interview_date": "2026-09-25T10:30:00",
+            "notes": "Delete test",
+            "result": "Pending",
+        },
+    )
+
+    interview_id = create_response.json()["id"]
+
+    response = client.delete(
+        f"/interviews/{interview_id}"
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "message": "Interview deleted successfully",
+        "id": interview_id,
+    }

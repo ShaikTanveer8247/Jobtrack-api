@@ -16,7 +16,7 @@ from ..schemas.application import (
     StatusHistoryResponse,
 )
 from ..schemas.status import ApplicationStatus
-
+from ..schemas.common import DeleteResponse
 
 router = APIRouter(
     prefix="/applications",
@@ -395,7 +395,11 @@ def update_application(
     return existing_application
 
 
-@router.delete("/{application_id}")
+@router.delete(
+    "/{application_id}",
+    response_model=DeleteResponse,
+    status_code=200,
+)
 def delete_application(
     application_id: int,
     db: Session = Depends(get_db),
@@ -418,7 +422,6 @@ def delete_application(
     db.commit()
 
     return {
-        "message": "Application deleted successfully",
-        "application_id": application_id,
-    }
-    
+    "message": "Application deleted successfully",
+    "id": application_id,
+}

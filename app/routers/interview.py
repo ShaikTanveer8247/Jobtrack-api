@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from datetime import datetime
+from ..schemas.common import DeleteResponse
 
 from ..core.dependencies import get_current_user, get_db
 from ..models import Application, Interview, User
@@ -173,6 +174,8 @@ def update_interview(
 
 @router.delete(
     "/{interview_id}",
+    response_model=DeleteResponse,
+    status_code=200,
 )
 def delete_interview(
     interview_id: int,
@@ -201,6 +204,6 @@ def delete_interview(
     db.commit()
 
     return {
-        "message": "Interview deleted successfully",
-        "interview_id": interview_id,
-    }
+    "message": "Interview deleted successfully",
+    "id": interview_id,
+}
