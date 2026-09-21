@@ -65,7 +65,7 @@ A production-style Job Application and Interview Tracking REST API built with Py
 
 - Pytest test suite
 - In-memory SQLite test database
-- CRUD testsloihgfcvbhju vf
+- CRUD tests
 - Duplicate protection tests
 - Status history tests
 - User ownership and security tests
@@ -270,7 +270,7 @@ Tests cover:
 .User ownership and authorization
 .Health check
 
-##Local Setup
+## Local Setup
 
 .Clone the repository
 
@@ -305,11 +305,11 @@ JWT_SECRET_KEY=your_secret_key
 Do not commit .env to Github
 
 
-##Run the API
+## Run the API
 
 python -m uvicorn app.main:app --reload
 
-##API Documentation
+## API Documentation
 
 http://127.0.0.1:8000/docs
 
@@ -331,7 +331,7 @@ http://127.0.0.1:8000/docs
 
 ![JWT Authentication](docs/jwt-authentication.png)
 
-##Health Check
+## Health Check
 
 http://127.0.0.1:8000/health
 
@@ -341,7 +341,7 @@ Expected response:
   "status": "ok"
 }
 
-##Example API Flow
+## Example API Flow
 
 Register User
      │
@@ -367,11 +367,11 @@ Create Interview
 View Dashboard
 
 
-##GitHub Actions
+## GitHub Actions
 
 GitHub Actions automatically runs the Pytest test suite when changes are pushed to the repository or submitted through a pull request.
 
-##API Documentation
+## API Documentation
 
 FastAPI provides interactive Swagger documentation at:
 
@@ -386,10 +386,8 @@ http://127.0.0.1:8000/redoc
 Shaik Tanveer
 
 GitHub: https://github.com/ShaikTanveer8247
-'@ | Set-Content README.md
 
 
-##Then run:
 
 ```powershell
 git diff --check
