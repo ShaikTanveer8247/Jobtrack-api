@@ -1,5 +1,6 @@
 @'
 # JobTrack API
+[![Tests](https://github.com/ShaikTanveer8247/Jobtrack-api/actions/workflows/tests.yml/badge.svg)](https://github.com/ShaikTanveer8247/Jobtrack-api/actions/workflows/tests.yml)
 
 A production-style Job Application and Interview Tracking REST API built with Python, FastAPI, SQLAlchemy, and MySQL.
 
