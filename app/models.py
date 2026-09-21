@@ -66,10 +66,10 @@ class Application(Base):
     )
 
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime,
-        nullable=False,
-        server_default=func.current_timestamp(),
-        server_onupdate=func.current_timestamp(),
+    DateTime,
+    nullable=False,
+    server_default=func.current_timestamp(),
+    onupdate=func.current_timestamp(),
     )
 class Interview(Base):
     __tablename__ = "interviews"
