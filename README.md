@@ -313,6 +313,24 @@ python -m uvicorn app.main:app --reload
 
 http://127.0.0.1:8000/docs
 
+## Swagger API Screenshots
+
+### API Overview
+
+![Swagger API Overview](docs/swagger-overview.png)
+
+### Application Filtering, Search, Sorting and Pagination
+
+![Application API Filters](docs/application-filters.png)
+
+### Users and Interviews
+
+![Users and Interviews API](docs/interviews-api.png)
+
+### JWT Authentication
+
+![JWT Authentication](docs/jwt-authentication.png)
+
 ##Health Check
 
 http://127.0.0.1:8000/health
